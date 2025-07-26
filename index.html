@@ -3,37 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AWS Cloud Practitioner Practice Exam</title>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-</head>
-<body>
-    <div id="root"></div>
-    <script type="text/babel">
-        const { useState, useEffect } = React;
-        const { CheckCircle, XCircle, Clock, RotateCcw, BookOpen } = lucide;
-
-        const AWSPracticeExam = () => {
-          const [currentQuestion, setCurrentQuestion] = useState(0);
-          const [selectedAnswers, setSelectedAnswers] = useState({});
-          const [showResults, setShowResults] = useState(false);
-          const [timeLeft, setTimeLeft] = useState(90 * 60);
-          const [examStarted, setExamStarted] = useState(false);
-          const [showScores, setShowScores] = useState(false);
-          const [examHistory, setExamHistory] = useState([]);
-          const [questions, setQuestions] = useState([]);
-          const [examMode, setExamMode] = useState('');
-🚀 Quick Fix - Simple Working Version:
-Instead of the complex version, let me give you a simple, guaranteed-to-work version:
-Replace your entire index.html with this single file:
-html<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AWS Practice Exam</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -44,14 +13,15 @@ html<!DOCTYPE html>
                 <h1 class="text-3xl font-bold text-gray-800 mb-4">AWS Cloud Practitioner Practice Exam</h1>
                 <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
                     <h2 class="text-xl font-semibold text-blue-800 mb-4">Choose Your Exam Mode</h2>
+                    <p class="text-sm text-gray-600 mb-4">Questions randomly selected from 50+ AWS practice questions</p>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <button onclick="startExam('full')" class="bg-blue-600 text-white px-6 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
                             <div class="text-lg mb-2">Full Exam</div>
-                            <div class="text-sm opacity-90">15 Questions • 90 mins</div>
+                            <div class="text-sm opacity-90">25 Questions • 90 mins</div>
                         </button>
                         <button onclick="startExam('quick')" class="bg-green-600 text-white px-6 py-4 rounded-lg font-semibold hover:bg-green-700 transition-colors">
                             <div class="text-lg mb-2">Quick Practice</div>
-                            <div class="text-sm opacity-90">8 Questions • 30 mins</div>
+                            <div class="text-sm opacity-90">10 Questions • 30 mins</div>
                         </button>
                         <button onclick="startExam('mini')" class="bg-purple-600 text-white px-6 py-4 rounded-lg font-semibold hover:bg-purple-700 transition-colors">
                             <div class="text-lg mb-2">Mini Quiz</div>
@@ -64,7 +34,8 @@ html<!DOCTYPE html>
     </div>
 
     <script>
-        const questions = [
+        // Complete question pool from GitHub repository
+        const allQuestions = [
             {
                 question: "You want to run a questionnaire application for only one day (without interruption), which Amazon EC2 purchase option should you use?",
                 options: ["Reserved instances", "Spot instances", "Dedicated instances", "On-demand instances"],
@@ -72,16 +43,50 @@ html<!DOCTYPE html>
                 explanation: "On-demand instances are best for short-term, irregular workloads that cannot be interrupted."
             },
             {
-                question: "Which AWS service will help achieve high transfer speeds for streaming video courses around the world?",
-                options: ["Amazon SNS", "Amazon Kinesis Video Streams", "AWS CloudFormation", "Amazon CloudFront"],
+                question: "You are working on a project that involves creating thumbnails of millions of images. Consistent uptime is not an issue, and continuous processing is not required. Which EC2 buying option would be the most cost-effective?",
+                options: ["Reserved Instances", "On-demand Instances", "Dedicated Instances", "Spot Instances"],
                 correct: 3,
-                explanation: "CloudFront is a CDN that caches content at edge locations worldwide to reduce latency."
+                explanation: "Spot instances offer the lowest cost and are perfect for fault-tolerant workloads that can handle interruptions."
             },
             {
-                question: "What is the AWS feature that provides an additional level of security above usernames and passwords?",
+                question: "Which of the following AWS services will help achieve high transfer speeds for streaming video courses around the world?",
+                options: ["Amazon SNS", "Amazon Kinesis Video Streams", "AWS CloudFormation", "Amazon CloudFront"],
+                correct: 3,
+                explanation: "CloudFront is a CDN that caches content at edge locations worldwide to reduce latency and improve transfer speeds."
+            },
+            {
+                question: "Adjusting compute capacity dynamically to reduce cost is an implementation of which AWS cloud best practice?",
+                options: ["Build security in every layer", "Parallelize tasks", "Implement elasticity", "Adopt monolithic architecture"],
+                correct: 2,
+                explanation: "Elasticity allows you to scale resources up or down based on demand, optimizing costs."
+            },
+            {
+                question: "What is the AWS feature that provides an additional level of security above the default authentication mechanism of usernames and passwords?",
                 options: ["Encrypted keys", "Email verification", "AWS KMS", "AWS MFA"],
                 correct: 3,
-                explanation: "Multi-Factor Authentication (MFA) adds an extra layer of security."
+                explanation: "Multi-Factor Authentication (MFA) adds an extra layer of security beyond username and password."
+            },
+            {
+                question: "According to the AWS Acceptable Use Policy, which statement is true regarding penetration testing of EC2 instances?",
+                options: [
+                    "Penetration testing is not allowed in AWS",
+                    "Penetration testing is performed automatically by AWS",
+                    "Penetration testing can be performed by the customer on their own instances without prior authorization",
+                    "AWS customers are only allowed to perform penetration testing on services managed by AWS"
+                ],
+                correct: 2,
+                explanation: "AWS allows customers to perform penetration testing on their own instances without prior authorization for most services."
+            },
+            {
+                question: "According to the AWS Shared Responsibility model, which are the customer's responsibilities? Choose the best answer.",
+                options: [
+                    "Managing environmental events of AWS data centers",
+                    "Protecting the confidentiality of data in transit in Amazon S3",
+                    "Controlling physical access to AWS Regions",
+                    "Ensuring that the underlying EC2 host is configured properly"
+                ],
+                correct: 1,
+                explanation: "Customers are responsible for data protection and application-level security including data in transit."
             },
             {
                 question: "Which service distributes incoming HTTP traffic evenly across multiple EC2 instances?",
@@ -93,7 +98,283 @@ html<!DOCTYPE html>
                 question: "Which is a MySQL-compatible relational database service that can scale capacity automatically?",
                 options: ["Amazon Neptune", "Amazon Aurora", "Amazon RDS for SQL Server", "Amazon RDS for PostgreSQL"],
                 correct: 1,
-                explanation: "Amazon Aurora is MySQL and PostgreSQL compatible with automatic scaling."
+                explanation: "Amazon Aurora is MySQL and PostgreSQL compatible with automatic scaling capabilities."
+            },
+            {
+                question: "Which AWS service helps deploy a .NET application quickly?",
+                options: ["Amazon SNS", "AWS Elastic Beanstalk", "AWS Systems Manager", "AWS Trusted Advisor"],
+                correct: 1,
+                explanation: "Elastic Beanstalk provides an easy platform for deploying applications including .NET."
+            },
+            {
+                question: "A company has business critical workloads and cannot accept downtime. What's the recommended disaster recovery strategy?",
+                options: [
+                    "Replicate data across Edge Locations with CloudFront failover",
+                    "Deploy resources across Availability Zones in the same Region",
+                    "Create point-in-time backups in another subnet",
+                    "Deploy resources to another Region with Active-Active strategy"
+                ],
+                correct: 3,
+                explanation: "Multi-region Active-Active deployment provides the highest availability for business-critical workloads."
+            },
+            {
+                question: "Which service runs containerized applications on EC2 instances?",
+                options: ["AWS Fargate", "Amazon ECS", "AWS Lambda", "Amazon EKS"],
+                correct: 1,
+                explanation: "Amazon ECS (Elastic Container Service) runs Docker containers on EC2 instances."
+            },
+            {
+                question: "A global company wants to centrally manage billing and security across AWS accounts. Which service helps?",
+                options: ["AWS Organizations", "AWS Trusted Advisor", "IAM User Groups", "AWS Config"],
+                correct: 0,
+                explanation: "AWS Organizations provides central management of multiple AWS accounts."
+            },
+            {
+                question: "Which AWS feature automatically adjusts EC2 capacity based on demand?",
+                options: ["AWS Elastic Load Balancer", "AWS Budgets", "AWS Auto Scaling", "AWS Cost Explorer"],
+                correct: 2,
+                explanation: "Auto Scaling automatically adjusts capacity to maintain performance and minimize cost."
+            },
+            {
+                question: "Which S3 storage class automatically moves data to the most cost-effective tier?",
+                options: ["Amazon S3 Intelligent-Tiering", "Amazon S3 Glacier", "Amazon S3 Standard", "Amazon S3 Standard-IA"],
+                correct: 0,
+                explanation: "S3 Intelligent-Tiering automatically moves data between access tiers based on usage patterns."
+            },
+            {
+                question: "A company needs hardware not shared with other customers. Which EC2 option meets this requirement?",
+                options: ["On-demand instances", "Spot instances", "Dedicated instances", "Reserved instances"],
+                correct: 2,
+                explanation: "Dedicated instances run on single-tenant hardware dedicated to a single customer."
+            },
+            {
+                question: "For transferring 60 Petabytes of data to AWS, which service is best?",
+                options: ["Snowball", "S3 Transfer Acceleration", "Snowmobile", "Amazon VPC"],
+                correct: 2,
+                explanation: "Snowmobile is designed for exabyte-scale data transfers and is ideal for 60+ PB."
+            },
+            {
+                question: "What tool estimates costs for S3 and CloudFront services?",
+                options: ["AWS Cost Explorer", "AWS Pricing Calculator", "AWS Budgets", "AWS Cost & Usage Report"],
+                correct: 1,
+                explanation: "AWS Pricing Calculator helps estimate costs for AWS services before implementation."
+            },
+            {
+                question: "Which AWS service sends promotional SMS to 200+ countries?",
+                options: ["Amazon SES", "Amazon S3", "Amazon SNS", "Amazon SQS"],
+                correct: 2,
+                explanation: "Amazon SNS (Simple Notification Service) can send SMS messages globally."
+            },
+            {
+                question: "Best practice when granting long-term DynamoDB access to an employee?",
+                options: [
+                    "Create IAM role with DynamoDB permissions",
+                    "Create IAM role with Administrator permissions",
+                    "Create IAM user with DynamoDB permissions",
+                    "Create IAM user with Administrator permissions"
+                ],
+                correct: 2,
+                explanation: "Create an IAM user with specific DynamoDB permissions following the principle of least privilege."
+            },
+            {
+                question: "A company is developing a mobile application and wants to allow users to use their Amazon, Apple, Facebook, or Google identities to authenticate. Which AWS service should they use?",
+                options: ["Amazon GuardDuty", "Amazon Personalize", "Amazon Cognito", "AWS IAM"],
+                correct: 2,
+                explanation: "Amazon Cognito enables user authentication with social identity providers like Amazon, Apple, Facebook, and Google."
+            },
+            {
+                question: "Which AWS service allows creating templates that define AWS resources as code for reuse across projects?",
+                options: ["AWS CloudFormation", "AWS Config", "AWS CloudTrail", "AWS Auto Scaling"],
+                correct: 0,
+                explanation: "CloudFormation enables Infrastructure as Code by defining AWS resources in templates."
+            },
+            {
+                question: "Which service should a company use for facial recognition in photo tagging applications?",
+                options: ["Amazon Comprehend", "AWS IAM", "Amazon Polly", "Amazon Rekognition"],
+                correct: 3,
+                explanation: "Amazon Rekognition provides computer vision capabilities including facial recognition and analysis."
+            },
+            {
+                question: "Which AWS Support Plans provide 24/7 access to Cloud Support Engineers via email and phone?",
+                options: ["Developer", "Premium", "Enterprise", "Business"],
+                correct: 2,
+                explanation: "Enterprise support plan provides 24/7 access to Cloud Support Engineers."
+            },
+            {
+                question: "To decrease AWS monthly charges across multiple standalone accounts, what should you do?",
+                options: [
+                    "Remove unnecessary AWS accounts",
+                    "Add accounts to AWS Organizations with Consolidated Billing",
+                    "Track charges by member accounts",
+                    "Enable AWS tiered-pricing"
+                ],
+                correct: 1,
+                explanation: "Consolidated Billing through AWS Organizations can provide volume discounts and simplified billing."
+            },
+            {
+                question: "Which service automates application deployment and scaling?",
+                options: ["Amazon S3", "AWS Elastic Beanstalk", "AWS CodeCommit", "Amazon EFS"],
+                correct: 1,
+                explanation: "Elastic Beanstalk automatically handles deployment, monitoring, and scaling of web applications."
+            },
+            {
+                question: "Which service simplifies relational database administration tasks?",
+                options: ["Amazon EC2", "Amazon RDS", "Amazon S3", "AWS Lambda"],
+                correct: 1,
+                explanation: "RDS is a managed service that handles database administration tasks like backups, patching, and scaling."
+            },
+            {
+                question: "Which can limit S3 bucket access to specific users?",
+                options: ["Public and private key-pair", "Amazon Inspector", "IAM policies", "Security Groups"],
+                correct: 2,
+                explanation: "IAM policies control access to S3 buckets and objects, allowing granular permission management."
+            },
+            {
+                question: "What are the connectivity options for building hybrid cloud architectures?",
+                options: ["AWS VPN", "Amazon Redshift", "AWS Direct Connect", "CloudFront"],
+                correct: 0,
+                explanation: "VPN provides connectivity between VPC and on-premises infrastructure."
+            },
+            {
+                question: "Which service identifies security groups allowing unrestricted access?",
+                options: ["AWS Trusted Advisor", "Amazon Inspector", "Amazon CloudWatch", "AWS CloudTrail"],
+                correct: 0,
+                explanation: "Trusted Advisor checks for security groups with unrestricted access and provides recommendations."
+            },
+            {
+                question: "Which service gives access to AWS auditor-issued reports and certifications?",
+                options: ["AWS Artifact", "AWS Config", "Amazon CloudWatch", "AWS CloudTrail"],
+                correct: 0,
+                explanation: "AWS Artifact provides access to compliance reports and certifications from AWS auditors."
+            },
+            {
+                question: "Which automatically recognizes and classifies sensitive data on AWS?",
+                options: ["Amazon GuardDuty", "Amazon Macie", "Amazon Inspector", "AWS Shield"],
+                correct: 1,
+                explanation: "Amazon Macie uses machine learning to discover, classify, and protect sensitive data."
+            },
+            {
+                question: "For compliance requirements requiring physical servers, which EC2 option is needed?",
+                options: ["Dedicated Hosts", "Dedicated Instances", "Spot Instances", "Reserved Instances"],
+                correct: 0,
+                explanation: "Dedicated Hosts provide physical servers exclusively for your use, meeting compliance requirements."
+            },
+            {
+                question: "Under shared responsibility, who is responsible for patching EC2 instances?",
+                options: ["AWS only", "Customer only", "Shared between AWS and customer", "Neither"],
+                correct: 1,
+                explanation: "Customers are responsible for patching the guest OS and applications on EC2 instances."
+            },
+            {
+                question: "For consistent dedicated connection between AWS and on-premises, which service?",
+                options: ["AWS Direct Connect", "Amazon VPC", "Amazon Connect", "AWS Data Pipeline"],
+                correct: 0,
+                explanation: "Direct Connect provides dedicated, consistent network connectivity between on-premises and AWS."
+            },
+            {
+                question: "Which provides the lowest-cost long-term storage for data accessed once or twice yearly?",
+                options: ["S3 Standard", "S3 Glacier", "Amazon Redshift", "S3 Glacier Deep Archive"],
+                correct: 3,
+                explanation: "S3 Glacier Deep Archive is the lowest-cost storage class for long-term archival with rare access."
+            },
+            {
+                question: "What are immediate benefits of AWS Cloud?",
+                options: ["Increased IT staff", "Capital expenses become variable", "User infrastructure control", "Increased agility"],
+                correct: 1,
+                explanation: "Cloud adoption replaces capital expenses with variable costs and increases business agility."
+            },
+            {
+                question: "Under shared responsibility, which is an example of security IN the cloud?",
+                options: ["Managing edge locations", "Physical security", "Firewall configuration", "Global infrastructure"],
+                correct: 2,
+                explanation: "Firewall configuration (Security Groups, NACLs) is customer responsibility for security IN the cloud."
+            },
+            {
+                question: "Which service automatically provisions resources to meet demand?",
+                options: ["AWS Auto Scaling", "Amazon CloudWatch", "AWS CloudFormation", "Amazon EC2"],
+                correct: 0,
+                explanation: "Auto Scaling automatically adjusts resource capacity based on demand patterns."
+            },
+            {
+                question: "For archived data that must be maintained 5 years and retrievable within 5 hours, which is most cost-effective?",
+                options: ["S3 Standard", "S3 Glacier Flexible Retrieval", "S3 Glacier Deep Archive", "S3 Intelligent-Tiering"],
+                correct: 1,
+                explanation: "S3 Glacier Flexible Retrieval offers cost-effective storage with retrieval times of minutes to hours."
+            },
+            {
+                question: "A company expecting short-term traffic spike needs uninterrupted service with cost optimization. Which EC2 instance type?",
+                options: ["On-Demand Instances", "Spot Instances", "Reserved Instances", "Dedicated Hosts"],
+                correct: 0,
+                explanation: "On-Demand instances provide guaranteed availability for short-term spikes without long-term commitment."
+            },
+            {
+                question: "Which database service is best for graph databases?",
+                options: ["Amazon Aurora", "Amazon Redshift", "Amazon DynamoDB", "Amazon Neptune"],
+                correct: 3,
+                explanation: "Amazon Neptune is specifically designed for graph databases and relationships."
+            },
+            {
+                question: "What does AWS Service Catalog help with?",
+                options: [
+                    "Finding service descriptions and use cases",
+                    "Exploring different AWS service catalogs",
+                    "Organizing and governing IT services",
+                    "Deploying infrastructure with programming languages"
+                ],
+                correct: 2,
+                explanation: "Service Catalog helps organizations manage and govern commonly deployed IT services."
+            },
+            {
+                question: "Best practices for AWS access keys?",
+                options: ["Delete and use passwords", "Share with trusted people", "Rotate regularly", "Save in application code"],
+                correct: 2,
+                explanation: "Regular rotation of access keys is a security best practice."
+            },
+            {
+                question: "How to increase AWS service limits?",
+                options: [
+                    "Contact AWS Support",
+                    "All IAM users have same limits",
+                    "No service limits exist",
+                    "Use Trusted Advisor to monitor limits"
+                ],
+                correct: 0,
+                explanation: "Contact AWS Support to request service limit increases when needed."
+            },
+            {
+                question: "Which service provides architectural guidance as part of Enterprise Support?",
+                options: ["AWS Knowledge Center", "AWS Health Dashboard", "Infrastructure Event Management", "AWS Support Concierge"],
+                correct: 2,
+                explanation: "Infrastructure Event Management provides architectural and scaling guidance for Enterprise Support customers."
+            },
+            {
+                question: "A MySQL DBA wants to reduce repetitive tasks. Which AWS service helps?",
+                options: ["Amazon EC2", "Amazon RDS", "Amazon S3", "AWS Lambda"],
+                correct: 1,
+                explanation: "Amazon RDS manages database administration tasks like backups, patching, and configuration."
+            },
+            {
+                question: "Which design principles help with fault tolerance in AWS?",
+                options: ["Multiple Availability Zones", "Single Region deployment", "Security focus", "High availability design"],
+                correct: 0,
+                explanation: "Using multiple AZs is a key fault tolerance principle in AWS architecture."
+            },
+            {
+                question: "Which pricing model provides highest savings compared to On-Demand?",
+                options: [
+                    "One-year, No Upfront, Standard RI",
+                    "One-year, All Upfront, Convertible RI", 
+                    "Three-year, All Upfront, Standard RI",
+                    "Three-year, No Upfront, Convertible RI"
+                ],
+                correct: 2,
+                explanation: "Three-year, All Upfront, Standard Reserved Instances provide the maximum discount compared to On-Demand pricing."
+            },
+            {
+                question: "Which allows changing Reserved Instance attributes while maintaining equal or greater value?",
+                options: ["Standard RI", "Convertible RI", "Scheduled RI", "Spot RI"],
+                correct: 1,
+                explanation: "Convertible Reserved Instances allow you to change instance attributes while maintaining the reservation value."
             }
         ];
 
@@ -115,15 +396,15 @@ html<!DOCTYPE html>
         function startExam(mode) {
             switch(mode) {
                 case 'full':
-                    currentQuestions = shuffle(questions);
+                    currentQuestions = shuffle(allQuestions).slice(0, 25);
                     timeLeft = 90 * 60;
                     break;
                 case 'quick':
-                    currentQuestions = shuffle(questions).slice(0, 3);
+                    currentQuestions = shuffle(allQuestions).slice(0, 10);
                     timeLeft = 30 * 60;
                     break;
                 case 'mini':
-                    currentQuestions = shuffle(questions).slice(0, 2);
+                    currentQuestions = shuffle(allQuestions).slice(0, 5);
                     timeLeft = 15 * 60;
                     break;
             }
@@ -150,46 +431,49 @@ html<!DOCTYPE html>
             const mins = Math.floor((timeLeft % 3600) / 60);
             const secs = timeLeft % 60;
             const timeString = `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-            document.getElementById('timer').textContent = timeString;
+            if (document.getElementById('timer')) {
+                document.getElementById('timer').textContent = timeString;
+            }
         }
 
         function showQuestion() {
             const q = currentQuestions[currentQuestion];
             document.getElementById('app').innerHTML = `
-                <div class="max-w-4xl mx-auto px-4 py-8">
-                    <div class="bg-white rounded-lg shadow-sm border p-6 mb-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <h1 class="text-xl font-bold text-gray-800">AWS Practice Exam</h1>
+                <div class="max-w-4xl mx-auto px-4 py-4">
+                    <div class="bg-white rounded-lg shadow-sm border p-4 mb-4">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-center">
+                            <h1 class="text-lg md:text-xl font-bold text-gray-800 mb-2 md:mb-0">AWS Practice Exam</h1>
                             <div class="flex items-center gap-2 text-blue-600">
                                 <span class="text-sm">⏰</span>
-                                <span id="timer" class="font-mono">${formatTime(timeLeft)}</span>
+                                <span id="timer" class="font-mono text-sm md:text-base">${formatTime(timeLeft)}</span>
                             </div>
                         </div>
-                        <div class="text-sm text-gray-600 mb-4">Question ${currentQuestion + 1} of ${currentQuestions.length}</div>
+                        <div class="text-sm text-gray-600 mt-2">Question ${currentQuestion + 1} of ${currentQuestions.length}</div>
                     </div>
                     
-                    <div class="bg-white rounded-lg shadow-sm border p-6">
-                        <h2 class="text-lg font-semibold mb-6">${q.question}</h2>
-                        <div class="space-y-3">
+                    <div class="bg-white rounded-lg shadow-sm border p-4 md:p-6">
+                        <h2 class="text-base md:text-lg font-semibold mb-4 md:mb-6 leading-relaxed">${q.question}</h2>
+                        <div class="space-y-2 md:space-y-3">
                             ${q.options.map((option, index) => `
                                 <button onclick="selectAnswer(${index})" 
-                                        class="w-full text-left p-4 border rounded-lg transition-colors hover:bg-gray-50 ${selectedAnswers[currentQuestion] === index ? 'border-blue-500 bg-blue-50' : 'border-gray-300'}"
+                                        class="w-full text-left p-3 md:p-4 border rounded-lg transition-colors hover:bg-gray-50 ${selectedAnswers[currentQuestion] === index ? 'border-blue-500 bg-blue-50' : 'border-gray-300'}"
                                         id="option-${index}">
-                                    <span class="font-medium">${String.fromCharCode(65 + index)}.</span> ${option}
+                                    <span class="font-medium text-sm md:text-base">${String.fromCharCode(65 + index)}.</span> 
+                                    <span class="text-sm md:text-base ml-2">${option}</span>
                                 </button>
                             `).join('')}
                         </div>
                         
-                        <div class="flex justify-between mt-8">
+                        <div class="flex justify-between mt-6 md:mt-8">
                             <button onclick="prevQuestion()" 
-                                    class="px-6 py-2 rounded-lg font-semibold ${currentQuestion === 0 ? 'bg-gray-300 text-gray-500' : 'bg-gray-600 text-white hover:bg-gray-700'}"
+                                    class="px-4 md:px-6 py-2 rounded-lg font-semibold text-sm md:text-base ${currentQuestion === 0 ? 'bg-gray-300 text-gray-500' : 'bg-gray-600 text-white hover:bg-gray-700'}"
                                     ${currentQuestion === 0 ? 'disabled' : ''}>
                                 Previous
                             </button>
                             
                             ${currentQuestion === currentQuestions.length - 1 
-                                ? '<button onclick="showResults()" class="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700">Submit Exam</button>'
-                                : '<button onclick="nextQuestion()" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Next</button>'
+                                ? '<button onclick="showResults()" class="bg-green-600 text-white px-4 md:px-6 py-2 rounded-lg font-semibold hover:bg-green-700 text-sm md:text-base">Submit Exam</button>'
+                                : '<button onclick="nextQuestion()" class="bg-blue-600 text-white px-4 md:px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 text-sm md:text-base">Next</button>'
                             }
                         </div>
                     </div>
@@ -237,33 +521,33 @@ html<!DOCTYPE html>
             const passed = percentage >= 70;
             
             document.getElementById('app').innerHTML = `
-                <div class="max-w-4xl mx-auto px-4 py-8">
-                    <div class="text-center mb-8">
-                        <h1 class="text-3xl font-bold text-gray-800 mb-4">Exam Results</h1>
-                        <div class="inline-flex items-center px-6 py-3 rounded-lg text-xl font-semibold ${passed ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                <div class="max-w-4xl mx-auto px-4 py-4 md:py-8">
+                    <div class="text-center mb-6 md:mb-8">
+                        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Exam Results</h1>
+                        <div class="inline-flex items-center px-4 md:px-6 py-3 rounded-lg text-lg md:text-xl font-semibold ${passed ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
                             ${passed ? '✅' : '❌'} ${score} / ${currentQuestions.length} (${percentage}%) - ${passed ? 'PASSED' : 'FAILED'}
                         </div>
-                        <p class="text-gray-600 mt-2">Passing score: 70%</p>
+                        <p class="text-gray-600 mt-2 text-sm md:text-base">Passing score: 70%</p>
                     </div>
                     
-                    <div class="bg-white rounded-lg shadow-sm border p-6 mb-6">
-                        <h2 class="text-xl font-semibold mb-4">Question Review</h2>
-                        <div class="space-y-4">
+                    <div class="bg-white rounded-lg shadow-sm border p-4 md:p-6 mb-6">
+                        <h2 class="text-lg md:text-xl font-semibold mb-4">Question Review</h2>
+                        <div class="space-y-3 md:space-y-4 max-h-96 overflow-y-auto">
                             ${currentQuestions.map((q, index) => {
                                 const userAnswer = selectedAnswers[index];
                                 const correct = userAnswer === q.correct;
                                 return `
-                                    <div class="border rounded-lg p-4 ${correct ? 'border-green-300 bg-green-50' : 'border-red-300 bg-red-50'}">
-                                        <div class="font-medium mb-2">Q${index + 1}. ${q.question}</div>
-                                        <div class="text-sm mb-2">
+                                    <div class="border rounded-lg p-3 md:p-4 ${correct ? 'border-green-300 bg-green-50' : 'border-red-300 bg-red-50'}">
+                                        <div class="font-medium mb-2 text-sm md:text-base">Q${index + 1}. ${q.question}</div>
+                                        <div class="text-xs md:text-sm mb-2">
                                             <span class="font-medium">Your answer:</span> 
                                             <span class="${correct ? 'text-green-700' : 'text-red-700'}">${userAnswer !== undefined ? q.options[userAnswer] : 'Not answered'}</span>
                                         </div>
-                                        <div class="text-sm mb-2">
+                                        <div class="text-xs md:text-sm mb-2">
                                             <span class="font-medium">Correct answer:</span> 
                                             <span class="text-green-700">${q.options[q.correct]}</span>
                                         </div>
-                                        <div class="text-sm text-blue-800 bg-blue-50 p-2 rounded">
+                                        <div class="text-xs md:text-sm text-blue-800 bg-blue-50 p-2 rounded">
                                             <strong>Explanation:</strong> ${q.explanation}
                                         </div>
                                     </div>
@@ -273,7 +557,7 @@ html<!DOCTYPE html>
                     </div>
                     
                     <div class="text-center">
-                        <button onclick="location.reload()" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                        <button onclick="location.reload()" class="bg-blue-600 text-white px-6 md:px-8 py-2 md:py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-sm md:text-base">
                             Take Another Exam
                         </button>
                     </div>
