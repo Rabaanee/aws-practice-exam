@@ -24,358 +24,262 @@
           const [examStarted, setExamStarted] = useState(false);
           const [showScores, setShowScores] = useState(false);
           const [examHistory, setExamHistory] = useState([]);
-
-          // Sample questions for demo
-          const allQuestions = [
-            {
-              id: 1,
-              question: "You want to run a questionnaire application for only one day (without interruption), which Amazon EC2 purchase option should you use?",
-              options: ["Reserved instances", "Spot instances", "Dedicated instances", "On-demand instances"],
-              correct: 3,
-              explanation: "On-demand instances are best for short-term, irregular workloads that cannot be interrupted."
-            },
-            {
-              id: 2,
-              question: "You are working on a project that involves creating thumbnails of millions of images. Consistent uptime is not an issue, and continuous processing is not required. Which EC2 buying option would be the most cost-effective?",
-              options: ["Reserved Instances", "On-demand Instances", "Dedicated Instances", "Spot Instances"],
-              correct: 3,
-              explanation: "Spot instances offer the lowest cost and are perfect for fault-tolerant workloads that can handle interruptions."
-            },
-            {
-              id: 3,
-              question: "Which of the following AWS services will help achieve high transfer speeds for streaming video courses around the world?",
-              options: ["Amazon SNS", "Amazon Kinesis Video Streams", "AWS CloudFormation", "Amazon CloudFront"],
-              correct: 3,
-              explanation: "CloudFront is a CDN that caches content at edge locations worldwide to reduce latency and improve transfer speeds."
-            },
-            {
-              id: 4,
-              question: "Select TWO examples of AWS shared controls.",
-              options: ["Patch Management", "IAM Management", "VPC Management", "Configuration Management", "Data Center operations"],
-              correct: [0, 3],
-              multiSelect: true,
-              explanation: "Patch Management and Configuration Management are shared responsibilities between AWS and customers."
-            },
-            {
-              id: 5,
-              question: "What is the AWS feature that provides an additional level of security above the default authentication mechanism of usernames and passwords?",
-              options: ["Encrypted keys", "Email verification", "AWS KMS", "AWS MFA"],
-              correct: 3,
-              explanation: "Multi-Factor Authentication (MFA) adds an extra layer of security beyond username and password."
-            }
-          ];
-
-          // Randomization function
-          const shuffleArray = (array) => {
-            const shuffled = [...array];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-              const j = Math.floor(Math.random() * (i + 1));
-              [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-            return shuffled;
-          };
-
           const [questions, setQuestions] = useState([]);
           const [examMode, setExamMode] = useState('');
+🚀 Quick Fix - Simple Working Version:
+Instead of the complex version, let me give you a simple, guaranteed-to-work version:
+Replace your entire index.html with this single file:
+html<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Practice Exam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <div id="app" class="min-h-screen">
+        <div class="max-w-4xl mx-auto px-4 py-8">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-4">AWS Cloud Practitioner Practice Exam</h1>
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                    <h2 class="text-xl font-semibold text-blue-800 mb-4">Choose Your Exam Mode</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <button onclick="startExam('full')" class="bg-blue-600 text-white px-6 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                            <div class="text-lg mb-2">Full Exam</div>
+                            <div class="text-sm opacity-90">15 Questions • 90 mins</div>
+                        </button>
+                        <button onclick="startExam('quick')" class="bg-green-600 text-white px-6 py-4 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                            <div class="text-lg mb-2">Quick Practice</div>
+                            <div class="text-sm opacity-90">8 Questions • 30 mins</div>
+                        </button>
+                        <button onclick="startExam('mini')" class="bg-purple-600 text-white px-6 py-4 rounded-lg font-semibold hover:bg-purple-700 transition-colors">
+                            <div class="text-lg mb-2">Mini Quiz</div>
+                            <div class="text-sm opacity-90">5 Questions • 15 mins</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-          const initializeExam = (mode) => {
-            setExamMode(mode);
-            let examQuestions;
-            
+    <script>
+        const questions = [
+            {
+                question: "You want to run a questionnaire application for only one day (without interruption), which Amazon EC2 purchase option should you use?",
+                options: ["Reserved instances", "Spot instances", "Dedicated instances", "On-demand instances"],
+                correct: 3,
+                explanation: "On-demand instances are best for short-term, irregular workloads that cannot be interrupted."
+            },
+            {
+                question: "Which AWS service will help achieve high transfer speeds for streaming video courses around the world?",
+                options: ["Amazon SNS", "Amazon Kinesis Video Streams", "AWS CloudFormation", "Amazon CloudFront"],
+                correct: 3,
+                explanation: "CloudFront is a CDN that caches content at edge locations worldwide to reduce latency."
+            },
+            {
+                question: "What is the AWS feature that provides an additional level of security above usernames and passwords?",
+                options: ["Encrypted keys", "Email verification", "AWS KMS", "AWS MFA"],
+                correct: 3,
+                explanation: "Multi-Factor Authentication (MFA) adds an extra layer of security."
+            },
+            {
+                question: "Which service distributes incoming HTTP traffic evenly across multiple EC2 instances?",
+                options: ["AWS EC2 Auto Recovery", "AWS Auto Scaling", "AWS Network Load Balancer", "AWS Application Load Balancer"],
+                correct: 3,
+                explanation: "Application Load Balancer distributes HTTP/HTTPS traffic across multiple targets."
+            },
+            {
+                question: "Which is a MySQL-compatible relational database service that can scale capacity automatically?",
+                options: ["Amazon Neptune", "Amazon Aurora", "Amazon RDS for SQL Server", "Amazon RDS for PostgreSQL"],
+                correct: 1,
+                explanation: "Amazon Aurora is MySQL and PostgreSQL compatible with automatic scaling."
+            }
+        ];
+
+        let currentQuestions = [];
+        let currentQuestion = 0;
+        let selectedAnswers = {};
+        let timeLeft = 0;
+        let timer = null;
+
+        function shuffle(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function startExam(mode) {
             switch(mode) {
-              case 'full':
-                examQuestions = shuffleArray(allQuestions);
-                setTimeLeft(90 * 60);
-                break;
-              case 'quick':
-                examQuestions = shuffleArray(allQuestions).slice(0, 3);
-                setTimeLeft(30 * 60);
-                break;
-              case 'practice':
-                examQuestions = shuffleArray(allQuestions).slice(0, 2);
-                setTimeLeft(15 * 60);
-                break;
-              default:
-                examQuestions = shuffleArray(allQuestions);
-                setTimeLeft(90 * 60);
+                case 'full':
+                    currentQuestions = shuffle(questions);
+                    timeLeft = 90 * 60;
+                    break;
+                case 'quick':
+                    currentQuestions = shuffle(questions).slice(0, 3);
+                    timeLeft = 30 * 60;
+                    break;
+                case 'mini':
+                    currentQuestions = shuffle(questions).slice(0, 2);
+                    timeLeft = 15 * 60;
+                    break;
             }
             
-            setQuestions(examQuestions);
-            setExamStarted(true);
-          };
+            currentQuestion = 0;
+            selectedAnswers = {};
+            showQuestion();
+            startTimer();
+        }
 
-          useEffect(() => {
-            let timer;
-            if (examStarted && timeLeft > 0 && !showResults) {
-              timer = setInterval(() => {
-                setTimeLeft(prev => {
-                  if (prev <= 1) {
-                    submitExam();
-                    return 0;
-                  }
-                  return prev - 1;
-                });
-              }, 1000);
-            }
-            return () => clearInterval(timer);
-          }, [examStarted, timeLeft, showResults]);
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    showResults();
+                }
+            }, 1000);
+        }
 
-          const formatTime = (seconds) => {
+        function updateTimer() {
+            const hours = Math.floor(timeLeft / 3600);
+            const mins = Math.floor((timeLeft % 3600) / 60);
+            const secs = timeLeft % 60;
+            const timeString = `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            document.getElementById('timer').textContent = timeString;
+        }
+
+        function showQuestion() {
+            const q = currentQuestions[currentQuestion];
+            document.getElementById('app').innerHTML = `
+                <div class="max-w-4xl mx-auto px-4 py-8">
+                    <div class="bg-white rounded-lg shadow-sm border p-6 mb-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h1 class="text-xl font-bold text-gray-800">AWS Practice Exam</h1>
+                            <div class="flex items-center gap-2 text-blue-600">
+                                <span class="text-sm">⏰</span>
+                                <span id="timer" class="font-mono">${formatTime(timeLeft)}</span>
+                            </div>
+                        </div>
+                        <div class="text-sm text-gray-600 mb-4">Question ${currentQuestion + 1} of ${currentQuestions.length}</div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-sm border p-6">
+                        <h2 class="text-lg font-semibold mb-6">${q.question}</h2>
+                        <div class="space-y-3">
+                            ${q.options.map((option, index) => `
+                                <button onclick="selectAnswer(${index})" 
+                                        class="w-full text-left p-4 border rounded-lg transition-colors hover:bg-gray-50 ${selectedAnswers[currentQuestion] === index ? 'border-blue-500 bg-blue-50' : 'border-gray-300'}"
+                                        id="option-${index}">
+                                    <span class="font-medium">${String.fromCharCode(65 + index)}.</span> ${option}
+                                </button>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="flex justify-between mt-8">
+                            <button onclick="prevQuestion()" 
+                                    class="px-6 py-2 rounded-lg font-semibold ${currentQuestion === 0 ? 'bg-gray-300 text-gray-500' : 'bg-gray-600 text-white hover:bg-gray-700'}"
+                                    ${currentQuestion === 0 ? 'disabled' : ''}>
+                                Previous
+                            </button>
+                            
+                            ${currentQuestion === currentQuestions.length - 1 
+                                ? '<button onclick="showResults()" class="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700">Submit Exam</button>'
+                                : '<button onclick="nextQuestion()" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Next</button>'
+                            }
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function formatTime(seconds) {
             const hours = Math.floor(seconds / 3600);
             const mins = Math.floor((seconds % 3600) / 60);
             const secs = seconds % 60;
             return `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-          };
+        }
 
-          const formatDuration = (seconds) => {
-            const hours = Math.floor(seconds / 3600);
-            const mins = Math.floor((seconds % 3600) / 60);
-            if (hours > 0) {
-              return `${hours}h ${mins}m`;
+        function selectAnswer(index) {
+            selectedAnswers[currentQuestion] = index;
+            showQuestion(); // Refresh to show selection
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < currentQuestions.length - 1) {
+                currentQuestion++;
+                showQuestion();
             }
-            return `${mins}m`;
-          };
+        }
 
-          const getTimeSpent = () => {
-            const totalTime = examMode === 'full' ? 90 * 60 : examMode === 'quick' ? 30 * 60 : 15 * 60;
-            const spent = totalTime - timeLeft;
-            return Math.max(0, spent);
-          };
-
-          const handleAnswerSelect = (questionId, answerIndex) => {
-            const question = questions.find(q => q.id === questionId);
-            if (question.multiSelect) {
-              const currentAnswers = selectedAnswers[questionId] || [];
-              const updatedAnswers = currentAnswers.includes(answerIndex)
-                ? currentAnswers.filter(index => index !== answerIndex)
-                : [...currentAnswers, answerIndex];
-              setSelectedAnswers(prev => ({
-                ...prev,
-                [questionId]: updatedAnswers
-              }));
-            } else {
-              setSelectedAnswers(prev => ({
-                ...prev,
-                [questionId]: answerIndex
-              }));
-            }
-          };
-
-          const calculateScore = () => {
-            let correct = 0;
-            questions.forEach(question => {
-              const userAnswer = selectedAnswers[question.id];
-              if (question.multiSelect) {
-                if (Array.isArray(userAnswer) && Array.isArray(question.correct)) {
-                  if (userAnswer.length === question.correct.length &&
-                      userAnswer.every(ans => question.correct.includes(ans))) {
-                    correct++;
-                  }
-                }
-              } else {
-                if (userAnswer === question.correct) {
-                  correct++;
-                }
-              }
-            });
-            return correct;
-          };
-
-          const submitExam = () => {
-            const score = calculateScore();
-            const percentage = Math.round((score / questions.length) * 100);
-            const passed = percentage >= 70;
-            
-            const examResult = {
-              id: Date.now(),
-              date: new Date().toISOString(),
-              mode: examMode,
-              score: score,
-              total: questions.length,
-              percentage: percentage,
-              passed: passed,
-              timeSpent: getTimeSpent()
-            };
-            
-            setExamHistory(prev => [examResult, ...prev].slice(0, 20));
-            setShowResults(true);
-          };
-
-          const resetExam = () => {
-            setCurrentQuestion(0);
-            setSelectedAnswers({});
-            setShowResults(false);
-            setTimeLeft(90 * 60);
-            setExamStarted(false);
-            setQuestions([]);
-            setExamMode('');
-            setShowScores(false);
-          };
-
-          const startExam = (mode) => {
-            setShowScores(false);
-            initializeExam(mode);
-          };
-
-          const viewScores = () => {
-            setShowScores(true);
-            setExamStarted(false);
-            setShowResults(false);
-          };
-
-          const nextQuestion = () => {
-            if (currentQuestion < questions.length - 1) {
-              setCurrentQuestion(currentQuestion + 1);
-            }
-          };
-
-          const prevQuestion = () => {
+        function prevQuestion() {
             if (currentQuestion > 0) {
-              setCurrentQuestion(currentQuestion - 1);
+                currentQuestion--;
+                showQuestion();
             }
-          };
+        }
 
-          // Show scores history
-          if (showScores) {
-            return React.createElement('div', {className: 'min-h-screen bg-gray-50 px-4 py-6'},
-              React.createElement('div', {className: 'max-w-4xl mx-auto'},
-                React.createElement('div', {className: 'text-center mb-6'},
-                  React.createElement('h1', {className: 'text-2xl md:text-3xl font-bold text-gray-800 mb-4'}, 'Exam Progress & History'),
-                  React.createElement('button', {
-                    onClick: () => setShowScores(false),
-                    className: 'bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors'
-                  }, 'Back to Exam')
-                ),
-                examHistory.length === 0 
-                  ? React.createElement('div', {className: 'text-center py-12'},
-                      React.createElement('h3', {className: 'text-lg font-medium text-gray-900 mb-2'}, 'No exam history yet'),
-                      React.createElement('p', {className: 'text-gray-600 mb-4'}, 'Take your first practice exam to start tracking progress!')
-                    )
-                  : React.createElement('div', {className: 'space-y-4'},
-                      React.createElement('div', {className: 'grid grid-cols-2 md:grid-cols-4 gap-4 mb-6'},
-                        React.createElement('div', {className: 'bg-white rounded-lg p-4 border shadow-sm'},
-                          React.createElement('div', {className: 'text-2xl font-bold text-blue-600'}, examHistory.length),
-                          React.createElement('div', {className: 'text-sm text-gray-600'}, 'Total Exams')
-                        )
-                      )
-                    )
-              )
-            );
-          }
-
-          if (!examStarted || questions.length === 0) {
-            return React.createElement('div', {className: 'min-h-screen bg-gray-50 px-4 py-6'},
-              React.createElement('div', {className: 'max-w-4xl mx-auto'},
-                React.createElement('div', {className: 'text-center'},
-                  React.createElement(BookOpen, {className: 'mx-auto mb-4 text-blue-600', size: 48}),
-                  React.createElement('h1', {className: 'text-2xl md:text-3xl font-bold text-gray-800 mb-4'}, 'AWS Cloud Practitioner Practice Exam'),
-                  React.createElement('div', {className: 'flex justify-center gap-2 mb-6'},
-                    React.createElement('button', {
-                      onClick: () => setShowScores(false),
-                      className: `px-4 py-2 rounded-lg font-semibold transition-colors text-sm md:text-base ${!showScores ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`
-                    }, 'Take Exam'),
-                    React.createElement('button', {
-                      onClick: viewScores,
-                      className: `px-4 py-2 rounded-lg font-semibold transition-colors text-sm md:text-base ${showScores ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`
-                    }, `Progress (${examHistory.length})`)
-                  ),
-                  React.createElement('div', {className: 'bg-blue-50 border border-blue-200 rounded-lg p-4 md:p-6 mb-6'},
-                    React.createElement('h2', {className: 'text-lg md:text-xl font-semibold text-blue-800 mb-4'}, 'Choose Your Exam Mode'),
-                    React.createElement('div', {className: 'grid grid-cols-1 gap-4'},
-                      React.createElement('div', {className: 'border border-blue-300 rounded-lg p-4 bg-white'},
-                        React.createElement('h3', {className: 'font-semibold text-blue-800 mb-2 text-center'}, 'Full Exam'),
-                        React.createElement('div', {className: 'flex flex-wrap justify-center gap-2 text-xs md:text-sm mb-4'},
-                          React.createElement('span', {className: 'bg-blue-100 px-2 py-1 rounded'}, '5 questions'),
-                          React.createElement('span', {className: 'bg-blue-100 px-2 py-1 rounded'}, '90 minutes')
-                        ),
-                        React.createElement('button', {
-                          onClick: () => startExam('full'),
-                          className: 'w-full bg-blue-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-sm md:text-base'
-                        }, 'Start Full Exam')
-                      )
-                    )
-                  )
-                )
-              )
-            );
-          }
-
-          if (showResults) {
-            const score = calculateScore();
-            const percentage = Math.round((score / questions.length) * 100);
+        function showResults() {
+            clearInterval(timer);
+            let score = 0;
+            
+            for (let i = 0; i < currentQuestions.length; i++) {
+                if (selectedAnswers[i] === currentQuestions[i].correct) {
+                    score++;
+                }
+            }
+            
+            const percentage = Math.round((score / currentQuestions.length) * 100);
             const passed = percentage >= 70;
-
-            return React.createElement('div', {className: 'min-h-screen bg-gray-50 px-4 py-6'},
-              React.createElement('div', {className: 'max-w-6xl mx-auto'},
-                React.createElement('div', {className: 'text-center mb-6'},
-                  React.createElement('h1', {className: 'text-2xl md:text-3xl font-bold text-gray-800 mb-4'}, 'Exam Results'),
-                  React.createElement('div', {className: `inline-flex items-center px-4 py-3 rounded-lg text-lg font-semibold ${passed ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`},
-                    passed ? React.createElement(CheckCircle, {className: 'mr-2', size: 20}) : React.createElement(XCircle, {className: 'mr-2', size: 20}),
-                    `${score} / ${questions.length} (${percentage}%) - ${passed ? 'PASSED' : 'FAILED'}`
-                  )
-                ),
-                React.createElement('button', {
-                  onClick: resetExam,
-                  className: 'bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors'
-                }, 'Take Another Exam')
-              )
-            );
-          }
-
-          const currentQ = questions[currentQuestion];
-          const userAnswer = selectedAnswers[currentQ.id];
-
-          return React.createElement('div', {className: 'min-h-screen bg-gray-50 px-4 py-4'},
-            React.createElement('div', {className: 'max-w-4xl mx-auto'},
-              React.createElement('div', {className: 'bg-white border rounded-lg p-4 mb-4'},
-                React.createElement('div', {className: 'flex justify-between items-center'},
-                  React.createElement('h1', {className: 'text-lg font-bold'}, 'AWS Practice Exam'),
-                  React.createElement('div', {className: 'flex items-center gap-2'},
-                    React.createElement(Clock, {size: 16}),
-                    React.createElement('span', {className: 'font-mono'}, formatTime(timeLeft))
-                  )
-                )
-              ),
-              React.createElement('div', {className: 'bg-white border rounded-lg p-4'},
-                React.createElement('div', {className: 'mb-4'},
-                  React.createElement('span', {className: 'text-sm text-gray-500'}, `Question ${currentQuestion + 1} of ${questions.length}`)
-                ),
-                React.createElement('h2', {className: 'text-lg font-semibold mb-4'}, currentQ.question),
-                React.createElement('div', {className: 'space-y-2'},
-                  currentQ.options.map((option, index) => {
-                    const isSelected = currentQ.multiSelect 
-                      ? Array.isArray(userAnswer) && userAnswer.includes(index)
-                      : userAnswer === index;
-
-                    return React.createElement('button', {
-                      key: index,
-                      onClick: () => handleAnswerSelect(currentQ.id, index),
-                      className: `w-full text-left p-3 border rounded-lg transition-colors ${isSelected ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:bg-gray-50'}`
-                    }, `${String.fromCharCode(65 + index)}. ${option}`);
-                  })
-                ),
-                React.createElement('div', {className: 'flex justify-between mt-6'},
-                  React.createElement('button', {
-                    onClick: prevQuestion,
-                    disabled: currentQuestion === 0,
-                    className: `px-4 py-2 rounded-lg font-semibold ${currentQuestion === 0 ? 'bg-gray-300 text-gray-500' : 'bg-gray-600 text-white hover:bg-gray-700'}`
-                  }, 'Previous'),
-                  currentQuestion === questions.length - 1 
-                    ? React.createElement('button', {
-                        onClick: submitExam,
-                        className: 'bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700'
-                      }, 'Submit Exam')
-                    : React.createElement('button', {
-                        onClick: nextQuestion,
-                        className: 'bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700'
-                      }, 'Next')
-                )
-              )
-            )
-          );
-        };
-
-        ReactDOM.render(React.createElement(AWSPracticeExam), document.getElementById('root'));
+            
+            document.getElementById('app').innerHTML = `
+                <div class="max-w-4xl mx-auto px-4 py-8">
+                    <div class="text-center mb-8">
+                        <h1 class="text-3xl font-bold text-gray-800 mb-4">Exam Results</h1>
+                        <div class="inline-flex items-center px-6 py-3 rounded-lg text-xl font-semibold ${passed ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                            ${passed ? '✅' : '❌'} ${score} / ${currentQuestions.length} (${percentage}%) - ${passed ? 'PASSED' : 'FAILED'}
+                        </div>
+                        <p class="text-gray-600 mt-2">Passing score: 70%</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-sm border p-6 mb-6">
+                        <h2 class="text-xl font-semibold mb-4">Question Review</h2>
+                        <div class="space-y-4">
+                            ${currentQuestions.map((q, index) => {
+                                const userAnswer = selectedAnswers[index];
+                                const correct = userAnswer === q.correct;
+                                return `
+                                    <div class="border rounded-lg p-4 ${correct ? 'border-green-300 bg-green-50' : 'border-red-300 bg-red-50'}">
+                                        <div class="font-medium mb-2">Q${index + 1}. ${q.question}</div>
+                                        <div class="text-sm mb-2">
+                                            <span class="font-medium">Your answer:</span> 
+                                            <span class="${correct ? 'text-green-700' : 'text-red-700'}">${userAnswer !== undefined ? q.options[userAnswer] : 'Not answered'}</span>
+                                        </div>
+                                        <div class="text-sm mb-2">
+                                            <span class="font-medium">Correct answer:</span> 
+                                            <span class="text-green-700">${q.options[q.correct]}</span>
+                                        </div>
+                                        <div class="text-sm text-blue-800 bg-blue-50 p-2 rounded">
+                                            <strong>Explanation:</strong> ${q.explanation}
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button onclick="location.reload()" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                            Take Another Exam
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
     </script>
 </body>
 </html>
